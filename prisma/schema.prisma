@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Colors {
+  BLACK
+  WHITE
+}
+
+enum Sizes {
+  US07
+  US08
+  US09
+  US10
+  US11
+  US12
+  US13
+  US14
+}
+
+enum Status_type {
+  PENDING
+  APPROVE
+}
+
+enum Models {
+  SNEAKER
+  SPORT
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  username    String  @db.VarChar(50)
+  firstname   String? @db.VarChar(50)
+  lastname    String? @db.VarChar(50)
+  phoneNumber String? @unique @db.VarChar(20)
+  address     String?
+  email       String  @unique @db.VarChar(50)
+  password    String
+
+  carts  Cart[]
+  orders Order[]
+}
+
+model Product {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(50)
+  model Models  @default(SNEAKER)
+  color Colors  @default(WHITE)
+  size  Sizes   @default(US07)
+  image String?
+  price Decimal @default(0)
+  stock Int     @default(0)
+
+  carts      Cart[]
+  orderItems OrderItem[]
+  images     Image[]
+}
+
+model Cart {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  productId Int
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  slip      String
+  status    Status_type @default(PENDING)
+  createdAt DateTime    @default(now()) @db.Timestamp(0)
+  userId    Int
+
+  user       User        @relation(fields: [userId], references: [id])
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  price     Decimal @default(0)
+  orderId   Int
+  productId Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+enum Type_image {
+  LEFT
+  TOP
+  RIGHT
+}
+
+model Image {
+  id        Int        @id @default(autoincrement())
+  path      String
+  type      Type_image @default(LEFT)
+  productId Int
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(50)
+  password String
+}
