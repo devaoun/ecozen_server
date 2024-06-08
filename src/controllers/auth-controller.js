@@ -12,7 +12,7 @@ authController.isUser = async (req, res, next) => {
         if (!user) {
             res.status(200).json({ message: 'not found' })
         }
-        console.log(user.id, user.email)
+        // console.log(user.id, user.email)
         res.status(200).json({ message : 'found email' })
     } catch (error) {
         next(error)
@@ -48,6 +48,10 @@ authController.login = async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+}
+
+authController.getMe = async (req,res,next) => {
+    res.status(200).json({user : req.user})
 }
 
 module.exports = authController
