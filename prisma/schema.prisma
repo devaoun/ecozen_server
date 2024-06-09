@@ -52,7 +52,7 @@ model Product {
   name  String  @db.VarChar(50)
   model Models  @default(SNEAKER)
   color Colors  @default(WHITE)
-  size  Sizes   @default(US07)
+  // size  Sizes   @default(US07)
   image String?
   price Decimal @default(0)
   stock Int     @default(0)
@@ -66,6 +66,7 @@ model Cart {
   id        Int @id @default(autoincrement())
   userId    Int
   productId Int
+  size Sizes
 
   user    User    @relation(fields: [userId], references: [id])
   product Product @relation(fields: [productId], references: [id])

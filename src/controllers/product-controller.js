@@ -29,4 +29,13 @@ productController.getProductByModel = async (req, res, next) => {
     }
 }
 
+productController.getProductByName = async (req, res, next) => {
+    try {
+        const data = await productService.getProductByName(req.params.productName)
+        res.status(200).json({ productName: data })
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = productController
