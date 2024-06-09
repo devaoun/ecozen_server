@@ -13,4 +13,24 @@ cartController.createCartItem = async (req, res, next) => {
     }
 }
 
+cartController.findCartItemByUserId = async (req,res,next) => {
+    try {
+        const userId = +req.params.userId
+        const item = await cartService.findCartItemByUserId(userId);
+        console.log(item)
+        res.status(200).json(item)
+    } catch (error) {
+        next(error)
+    }
+}
+
+cartController.deleteCartItemByCartId = async(req,res,next) => {
+    try {
+        await cartService.deleteCartItemByCartId(+req.params.cartId)
+        res.status(200).json({message : 'Deleted cart item!'})
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = cartController
