@@ -12,7 +12,6 @@ authController.isUser = async (req, res, next) => {
         if (!user) {
             res.status(200).json({ message: 'not found' })
         }
-        // console.log(user.id, user.email)
         res.status(200).json({ message : 'found email' })
     } catch (error) {
         next(error)
