@@ -9,5 +9,4 @@ userService.updateUserInfoById = (userId,data) => prisma.user.update({
     where: { id : userId }
 })
 
-
 module.exports = userService
