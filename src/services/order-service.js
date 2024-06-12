@@ -19,4 +19,15 @@ orderService.createTransactionOrder = async (orderData, orderItemData, userId) =
     })
 }
 
+orderService.getUserOrder = (userId) => prisma.order.findMany({
+    where: { userId },
+    include: {
+        orderItems: {
+            include : {
+                product : true
+            }
+        }
+    }
+})
+
 module.exports = orderService
