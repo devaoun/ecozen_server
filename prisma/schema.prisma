@@ -88,6 +88,7 @@ model OrderItem {
   price     Decimal @default(0)
   orderId   Int
   productId Int
+  size Sizes
 
   order   Order   @relation(fields: [orderId], references: [id])
   product Product @relation(fields: [productId], references: [id])
