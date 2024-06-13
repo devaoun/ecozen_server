@@ -30,4 +30,20 @@ orderService.getUserOrder = (userId) => prisma.order.findMany({
     }
 })
 
+orderService.getAllOrder = () => prisma.order.findMany({
+    include : {
+        user : true,
+        orderItems : {
+            include : {
+                product : true
+            }
+        }
+    }
+})
+
+orderService.updateOrderStatus = (orderId,status) => prisma.order.update({
+    data : {status},
+    where : {id : orderId}
+})
+
 module.exports = orderService

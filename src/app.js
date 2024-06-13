@@ -8,6 +8,7 @@ const productRouter = require('./routes/product-route');
 const cartRouter = require('./routes/cart-route');
 const userRouter = require('./routes/user-route');
 const orderRouter = require('./routes/order-route');
+const adminRouter = require('./routes/admin-route');
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,8 @@ app.use('/product',productRouter)
 app.use('/cart',cartRouter)
 app.use('/user',userRouter)
 app.use('/order',orderRouter)
+
+app.use('/admin',adminRouter)
 
 
 app.use(notFoundMiddleware)

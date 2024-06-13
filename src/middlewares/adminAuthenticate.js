@@ -1,8 +1,8 @@
+const adminService = require("../services/admin-service");
 const jwtService = require("../services/jwt-service");
-const userService = require("../services/user-service");
 const createError = require("../utils/create-error");
 
-const authenticate = async (req,res,next) => {
+const adminAuthenticate = async (req,res,next) => {
     try {
         console.log(req.headers)
         const authorization = req.headers.authorization;
@@ -17,20 +17,20 @@ const authenticate = async (req,res,next) => {
         const accessToken = authorization.split(' ')[1]
         const payload = jwtService.verify(accessToken);
 
-        const user = await userService.findUserByEmail(payload.email)
+        const admin = await adminService.findAccount(payload.account)
 
-        if(!user) {
+        if(!admin) {
             createError({
-                message : 'user was not found',
+                message : 'admin was not found',
                 statusCode: 400
             })
         }
-        delete user.password
-        req.user = user
+        delete admin.password
+        req.admin = admin
         next()
     } catch (error) {
         next(error)
     }
 }
 
-module.exports = authenticate
+module.exports = adminAuthenticate
