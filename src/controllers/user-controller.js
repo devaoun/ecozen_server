@@ -15,9 +15,7 @@ userController.updateUserInfoById = async (req, res, next) => {
 
 userController.uploadSlip = async (req, res, next) => {
     try {
-        // console.log(req.file)
         const result = await uploadService.upload(req.file.path)
-        // console.log(result)
         res.status(201).json({slip:result})
     } catch (error) {
         next(error)

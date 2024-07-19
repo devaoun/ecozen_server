@@ -17,7 +17,7 @@ adminController.login = async (req, res, next) => {
         }
         delete result.password
         const token = jwtService.sign(result)
-        res.status(200).json({ message: 'login success', accessToken : token })
+        res.status(200).json({ message: 'login success', adminToken : token })
     } catch (error) {
         next(error)
     }
@@ -26,7 +26,7 @@ adminController.login = async (req, res, next) => {
 adminController.getAccount = async(req,res,next) =>{
     try {
         const {account} = req.admin
-        res.status(200).json({message : account})
+        res.status(200).json({message : account , role : 'admin'})
     } catch (error) {
         next(error)
     }
@@ -43,12 +43,9 @@ adminController.getAllUserOrder = async(req,res,next) => {
 
 adminController.updateOrderStatus = async(req,res,next) => {
     try {
-        console.log('as;dasdsadasdasdad')
         const orderId = +req.params.orderId
         const {status} = req.body
-        console.log(status)
-        const result = await orderService.updateOrderStatus(orderId,status)
-        console.log(result)
+        await orderService.updateOrderStatus(orderId,status)
         res.status(201).json({message : 'status update success'})
     } catch (error) {
         next(error)

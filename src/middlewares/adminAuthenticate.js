@@ -4,9 +4,7 @@ const createError = require("../utils/create-error");
 
 const adminAuthenticate = async (req,res,next) => {
     try {
-        console.log(req.headers)
         const authorization = req.headers.authorization;
-        console.log(authorization)
         if(!authorization || !authorization.startsWith('Bearer ')){
             createError({
                 message : 'Unauthenticated',
@@ -14,8 +12,8 @@ const adminAuthenticate = async (req,res,next) => {
             })
         }
 
-        const accessToken = authorization.split(' ')[1]
-        const payload = jwtService.verify(accessToken);
+        const adminToken = authorization.split(' ')[1]
+        const payload = jwtService.verify(adminToken);
 
         const admin = await adminService.findAccount(payload.account)
 

@@ -7,6 +7,6 @@ const adminRouter = express.Router()
 adminRouter.post('/login',adminController.login)
 adminRouter.get('/account',adminAuthenticate,adminController.getAccount)
 adminRouter.get('/allUserOrder',adminController.getAllUserOrder)
-adminRouter.patch('/orderStatus/:orderId',adminController.updateOrderStatus)
+adminRouter.patch('/orderStatus/:orderId',adminAuthenticate,adminController.updateOrderStatus)
 
 module.exports = adminRouter

@@ -42,7 +42,6 @@ authController.login = async (req, res, next) => {
         }
         delete user.password
         const token = await jwtService.sign(user)
-        console.log(token)
         res.status(200).json({ message: 'login success', accessToken: token })
     } catch (error) {
         next(error)
